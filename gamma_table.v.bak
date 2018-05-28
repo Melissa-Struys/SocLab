@@ -1,0 +1,9 @@
+module gamma_table(clk, val_in, val_out);
+ parameter color_res = 8;
+ parameter gamma = 1;
+ 
+ input clk;
+ input [color_res-1:0] val_in;
+ output [color_res-1:0] val_out;
+ 
+ 

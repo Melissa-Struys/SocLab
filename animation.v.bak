@@ -1,0 +1,2 @@
+module animation(clk, rst, ram_address, ram_data);
+ 

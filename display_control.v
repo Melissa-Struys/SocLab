@@ -1,11 +1,15 @@
-module display_control(clk, rst, display_ena, display_rgb1, display_rgb2, d_addr, d_clk, d_oe, d_lat);
+module display_control(clk, rst, display_ena, ram_data, ram_address, display_rgb1, display_rgb2, d_addr, d_clk, d_oe, d_lat);
  input clk, rst, display_ena;
+ input [47:0] ram_data;
+ output [8:0] ram_address;
  output [2:0] display_rgb1, display_rgb2;
  output  [3:0] d_addr;
- reg [3:0] display_addr;
  output  d_clk, d_oe, d_lat;
- reg display_clk, display_oe, display_lat;
  
+ assign ram_address = address_ctr;
+ 
+ reg [3:0] display_addr;
+ reg display_clk, display_oe, display_lat;
  assign d_addr = display_addr;
  assign d_clk = display_clk;
  assign d_oe = display_oe;
@@ -26,14 +30,7 @@ module display_control(clk, rst, display_ena, display_rgb1, display_rgb2, d_addr
 	assign display_rgb2[1] = green2;
 	assign display_rgb2[2] = blue2;
  
- assign red1 = 1;
- assign green1 = 0;
- assign blue1 = 1;
- assign red2 = 0;
- assign green2 = 1;
- assign blue2 = 1;
- 
- reg [2:0]wait_ctr;
+ reg [2:0] wait_ctr;
  reg wait_ena;
  
  reg [9:0] address_ctr;
@@ -48,6 +45,31 @@ module display_control(clk, rst, display_ena, display_rgb1, display_rgb2, d_addr
  //st4_latch
  //st5_oe_high
  //st6_oe_low
+ 
+ gamma_table gt1(	.clk(clk), 
+						.val_in(ram_data[7:0]), 
+						.val_out(red1)
+						);
+ gamma_table gt2(	.clk(clk), 
+						.val_in(ram_data[15:8]), 
+						.val_out(green1)
+						);
+ gamma_table gt3(	.clk(clk), 
+						.val_in(ram_data[23:16]), 
+						.val_out(blue1)
+						);
+ gamma_table gt4(	.clk(clk), 
+						.val_in(ram_data[31:24]), 
+						.val_out(red2)
+						);
+ gamma_table gt5(	.clk(clk), 
+						.val_in(ram_data[39:32]), 
+						.val_out(green2)
+						);
+ gamma_table gt6(	.clk(clk), 
+						.val_in(ram_data[47:40]), 
+						.val_out(blue2)
+						);
  
  always@(posedge clk) 
 	begin

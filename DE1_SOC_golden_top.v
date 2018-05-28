@@ -277,6 +277,10 @@ module DE1_SOC_golden_top(
  assign GPIO_0[8] = row[1];
  assign GPIO_0[11] = row[2];
  assign GPIO_0[10] = row[3];
+ 
+ wire [47:0] ram_data; 
+ wire [8:0] ram_address;
+ 
 //=======================================================
 //  Structural coding
 //=======================================================
@@ -321,6 +325,8 @@ matrix mx(	.r0(GPIO_0[1]),
 display_control dc(	.clk(CLOCK_50), 
 							.rst(!KEY[1]), 
 							.display_ena(1), 
+							.ram_data(ram_data), 
+							.ram_address(ram_address),
 							.display_rgb1(rgb1), 
 							.display_rgb2(rgb2), 
 							.d_addr(row), 
@@ -329,6 +335,11 @@ display_control dc(	.clk(CLOCK_50),
 							.d_lat(GPIO_0[13])
 							);
 
+animation a(	.clk(CLOCK_50), 
+					.rst(!KEY[1]), 
+					.ram_address(ram_address), 
+					.ram_data(ram_data)
+					);
 
 				
 endmodule
