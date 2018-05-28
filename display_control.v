@@ -12,7 +12,7 @@ module display_control(clk, rst, display_ena, display_rgb1, display_rgb2, d_addr
  assign d_lat = display_lat;
  
  parameter gamma = 2.8;
- parameter wait_max = 3;
+ parameter wait_max = 2;
  parameter wait_res = 3;
  
  reg [8:0] pwm_ctr;
@@ -28,15 +28,15 @@ module display_control(clk, rst, display_ena, display_rgb1, display_rgb2, d_addr
  
  assign red1 = 1;
  assign green1 = 0;
- assign blue1 = 0;
+ assign blue1 = 1;
  assign red2 = 0;
- assign green2 = 0;
- assign blue2 = 0;
+ assign green2 = 1;
+ assign blue2 = 1;
  
  reg [2:0]wait_ctr;
  reg wait_ena;
  
- reg [8:0] address_ctr;
+ reg [9:0] address_ctr;
  
  reg next_oe, disp_oe, disp_lat, disp_clk;
  
@@ -55,7 +55,7 @@ module display_control(clk, rst, display_ena, display_rgb1, display_rgb2, d_addr
 			pwm_ctr = 0;
 		end else begin			
 			if (pwm_inc == 1) begin
-				if(pwm_ctr == 256) begin
+				if(pwm_ctr == 128) begin
 					pwm_ctr = 0;
 				end else begin
 					pwm_ctr = pwm_ctr + 1;
@@ -80,7 +80,7 @@ module display_control(clk, rst, display_ena, display_rgb1, display_rgb2, d_addr
 		end else begin			
 			if (col_inc == 1) begin
 				if(pwm_inc == 1 && row_inc == 0) begin
-					address_ctr = {address_ctr[8:5], 5'b00000} ;
+					address_ctr = {address_ctr[9:6], 6'b000000} ;
 				end else begin
 					address_ctr = address_ctr + 1;
 				end
@@ -94,7 +94,7 @@ module display_control(clk, rst, display_ena, display_rgb1, display_rgb2, d_addr
 		display_lat = disp_lat;
 		display_clk = disp_clk;
 			if(disp_oe == 1 && disp_lat == 1) begin
-				display_addr = address_ctr[8:5];
+				display_addr = address_ctr[9:6];
 			end
 	end 
  
@@ -136,7 +136,7 @@ module display_control(clk, rst, display_ena, display_rgb1, display_rgb2, d_addr
 			2:	begin
 					disp_clk = 0;
 					if(wait_ctr == wait_max) begin
-						if(address_ctr[4:0] == 31) begin
+						if(address_ctr[5:0] == 63) begin
 							if(pwm_ctr == 0) begin
 								next_state = 5;
 							end else begin
@@ -152,10 +152,10 @@ module display_control(clk, rst, display_ena, display_rgb1, display_rgb2, d_addr
 			3: begin
 					wait_ena = 1;
 					col_inc = 1;
-					if(address_ctr[4:0] == 31) begin
+					if(address_ctr[5:0] == 63) begin
 						pwm_inc = 1;
 					end
-					if(pwm_ctr == 256) begin
+					if(pwm_ctr == 128) begin
 						row_inc = 1;
 					end
 					if(disp_oe == 1) begin

@@ -1,5 +1,5 @@
 Analysis & Synthesis report for project
-Mon May 28 11:02:05 2018
+Mon May 28 13:33:39 2018
 Quartus Prime Version 16.1.0 Build 196 10/24/2016 SJ Lite Edition
 
 
@@ -58,13 +58,13 @@ agreement for further details.
 +-------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                  ;
 +---------------------------------+---------------------------------------------+
-; Analysis & Synthesis Status     ; Successful - Mon May 28 11:02:05 2018       ;
+; Analysis & Synthesis Status     ; Successful - Mon May 28 13:33:39 2018       ;
 ; Quartus Prime Version           ; 16.1.0 Build 196 10/24/2016 SJ Lite Edition ;
 ; Revision Name                   ; project                                     ;
 ; Top-level Entity Name           ; DE1_SOC_golden_top                          ;
 ; Family                          ; Cyclone V                                   ;
 ; Logic utilization (in ALMs)     ; N/A                                         ;
-; Total registers                 ; 628                                         ;
+; Total registers                 ; 630                                         ;
 ; Total pins                      ; 241                                         ;
 ; Total virtual pins              ; 0                                           ;
 ; Total block memory bits         ; 1,408                                       ;
@@ -178,7 +178,8 @@ agreement for further details.
 ;                            ;             ;
 ; Usage by Processor         ; % Time Used ;
 ;     Processor 1            ; 100.0%      ;
-;     Processors 2-4         ;   0.0%      ;
+;     Processor 2            ;   0.0%      ;
+;     Processors 3-4         ;   0.0%      ;
 +----------------------------+-------------+
 
 
@@ -254,16 +255,16 @@ agreement for further details.
 +---------------------------------------------+--------------------------+
 ; Resource                                    ; Usage                    ;
 +---------------------------------------------+--------------------------+
-; Estimate of Logic utilization (ALMs needed) ; 369                      ;
+; Estimate of Logic utilization (ALMs needed) ; 370                      ;
 ;                                             ;                          ;
-; Combinational ALUT usage for logic          ; 464                      ;
+; Combinational ALUT usage for logic          ; 467                      ;
 ;     -- 7 input functions                    ; 0                        ;
-;     -- 6 input functions                    ; 89                       ;
-;     -- 5 input functions                    ; 70                       ;
+;     -- 6 input functions                    ; 90                       ;
+;     -- 5 input functions                    ; 69                       ;
 ;     -- 4 input functions                    ; 81                       ;
-;     -- <=3 input functions                  ; 224                      ;
+;     -- <=3 input functions                  ; 227                      ;
 ;                                             ;                          ;
-; Dedicated logic registers                   ; 628                      ;
+; Dedicated logic registers                   ; 630                      ;
 ;                                             ;                          ;
 ; I/O pins                                    ; 241                      ;
 ; Total MLAB memory bits                      ; 0                        ;
@@ -273,7 +274,7 @@ agreement for further details.
 ;                                             ;                          ;
 ; Maximum fan-out node                        ; altera_internal_jtag~TDO ;
 ; Maximum fan-out                             ; 343                      ;
-; Total fan-out                               ; 4421                     ;
+; Total fan-out                               ; 4433                     ;
 ; Average fan-out                             ; 2.62                     ;
 +---------------------------------------------+--------------------------+
 
@@ -283,8 +284,8 @@ agreement for further details.
 +-----------------------------------------------------------------------------------------------------------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------------+--------------+
 ; Compilation Hierarchy Node                                                                                                              ; Combinational ALUTs ; Dedicated Logic Registers ; Block Memory Bits ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                                                                                                                                                                                                                                                                                            ; Entity Name                       ; Library Name ;
 +-----------------------------------------------------------------------------------------------------------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------------+--------------+
-; |DE1_SOC_golden_top                                                                                                                     ; 464 (1)             ; 628 (0)                   ; 1408              ; 0          ; 241  ; 0            ; |DE1_SOC_golden_top                                                                                                                                                                                                                                                                                                                                            ; DE1_SOC_golden_top                ; work         ;
-;    |display_control:dc|                                                                                                                 ; 52 (52)             ; 35 (35)                   ; 0                 ; 0          ; 0    ; 0            ; |DE1_SOC_golden_top|display_control:dc                                                                                                                                                                                                                                                                                                                         ; display_control                   ; work         ;
+; |DE1_SOC_golden_top                                                                                                                     ; 467 (1)             ; 630 (0)                   ; 1408              ; 0          ; 241  ; 0            ; |DE1_SOC_golden_top                                                                                                                                                                                                                                                                                                                                            ; DE1_SOC_golden_top                ; work         ;
+;    |display_control:dc|                                                                                                                 ; 55 (55)             ; 37 (37)                   ; 0                 ; 0          ; 0    ; 0            ; |DE1_SOC_golden_top|display_control:dc                                                                                                                                                                                                                                                                                                                         ; display_control                   ; work         ;
 ;    |ps2:muis|                                                                                                                           ; 100 (72)            ; 99 (99)                   ; 0                 ; 0          ; 0    ; 0            ; |DE1_SOC_golden_top|ps2:muis                                                                                                                                                                                                                                                                                                                                   ; ps2                               ; work         ;
 ;       |SEG7_LUT:U1|                                                                                                                     ; 7 (7)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |DE1_SOC_golden_top|ps2:muis|SEG7_LUT:U1                                                                                                                                                                                                                                                                                                                       ; SEG7_LUT                          ; work         ;
 ;       |SEG7_LUT:U2|                                                                                                                     ; 7 (7)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |DE1_SOC_golden_top|ps2:muis|SEG7_LUT:U2                                                                                                                                                                                                                                                                                                                       ; SEG7_LUT                          ; work         ;
@@ -417,12 +418,12 @@ Encoding Type:  One-Hot
 +----------------------------------------------+-------+
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
-; Total registers                              ; 628   ;
+; Total registers                              ; 630   ;
 ; Number of registers using Synchronous Clear  ; 124   ;
 ; Number of registers using Synchronous Load   ; 118   ;
 ; Number of registers using Asynchronous Clear ; 202   ;
 ; Number of registers using Asynchronous Load  ; 0     ;
-; Number of registers using Clock Enable       ; 374   ;
+; Number of registers using Clock Enable       ; 375   ;
 ; Number of registers using Preset             ; 0     ;
 +----------------------------------------------+-------+
 
@@ -451,9 +452,9 @@ Encoding Type:  One-Hot
 +--------------------+-----------+---------------+----------------------+------------------------+------------+-------------------------------------------------------+
 ; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                            ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+-------------------------------------------------------+
-; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |DE1_SOC_golden_top|display_control:dc|address_ctr[5] ;
+; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |DE1_SOC_golden_top|display_control:dc|address_ctr[7] ;
 ; 4:1                ; 9 bits    ; 18 LEs        ; 0 LEs                ; 18 LEs                 ; Yes        ; |DE1_SOC_golden_top|display_control:dc|pwm_ctr[5]     ;
-; 4:1                ; 5 bits    ; 10 LEs        ; 10 LEs               ; 0 LEs                  ; Yes        ; |DE1_SOC_golden_top|display_control:dc|address_ctr[4] ;
+; 4:1                ; 6 bits    ; 12 LEs        ; 12 LEs               ; 0 LEs                  ; Yes        ; |DE1_SOC_golden_top|display_control:dc|address_ctr[0] ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+-------------------------------------------------------+
 
 
@@ -486,7 +487,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 ; Parameter Name ; Value ; Type                                   ;
 +----------------+-------+----------------------------------------+
 ; gamma          ; 2.8   ; Signed Float                           ;
-; wait_max       ; 3     ; Signed Integer                         ;
+; wait_max       ; 2     ; Signed Integer                         ;
 ; wait_res       ; 3     ; Signed Integer                         ;
 +----------------+-------+----------------------------------------+
 Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
@@ -558,15 +559,14 @@ Note: In order to hide this table in the UI and the text report file, please set
 Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
 
 
-+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Port Connectivity Checks: "display_control:dc"                                                                                                                                                                           ;
-+-----------------+--------+----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Port            ; Type   ; Severity ; Details                                                                                                                                                                            ;
-+-----------------+--------+----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; display_ena     ; Input  ; Warning  ; Input port expression (32 bits) is wider than the input port (1 bits) it drives.  The 31 most-significant bit(s) in the expression will be dangling if they have no other fanouts. ;
-; display_ena[-1] ; Input  ; Info     ; Stuck at VCC                                                                                                                                                                       ;
-; d_clk           ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed.                                                                                                ;
-+-----------------+--------+----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "display_control:dc"                                                                                                                                                                          ;
++-----------------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port            ; Type  ; Severity ; Details                                                                                                                                                                            ;
++-----------------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; display_ena     ; Input ; Warning  ; Input port expression (32 bits) is wider than the input port (1 bits) it drives.  The 31 most-significant bit(s) in the expression will be dangling if they have no other fanouts. ;
+; display_ena[-1] ; Input ; Info     ; Stuck at VCC                                                                                                                                                                       ;
++-----------------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 
 +-----------------------------------------------------------------------------------------------------------------------+
@@ -592,30 +592,30 @@ Note: In order to hide this table in the UI and the text report file, please set
 +-----------------------+-----------------------------+
 ; Type                  ; Count                       ;
 +-----------------------+-----------------------------+
-; arriav_ff             ; 134                         ;
+; arriav_ff             ; 136                         ;
 ;     CLR               ; 10                          ;
-;     ENA               ; 45                          ;
+;     ENA               ; 46                          ;
 ;     ENA CLR           ; 19                          ;
 ;     ENA SCLR          ; 9                           ;
 ;     SCLR              ; 18                          ;
-;     plain             ; 33                          ;
+;     plain             ; 34                          ;
 ; arriav_io_obuf        ; 96                          ;
-; arriav_lcell_comb     ; 157                         ;
-;     arith             ; 50                          ;
-;         1 data inputs ; 33                          ;
+; arriav_lcell_comb     ; 160                         ;
+;     arith             ; 51                          ;
+;         1 data inputs ; 34                          ;
 ;         2 data inputs ; 17                          ;
-;     normal            ; 107                         ;
+;     normal            ; 109                         ;
 ;         0 data inputs ; 1                           ;
-;         1 data inputs ; 7                           ;
-;         2 data inputs ; 24                          ;
+;         1 data inputs ; 8                           ;
+;         2 data inputs ; 25                          ;
 ;         3 data inputs ; 7                           ;
 ;         4 data inputs ; 40                          ;
-;         5 data inputs ; 9                           ;
-;         6 data inputs ; 19                          ;
+;         5 data inputs ; 8                           ;
+;         6 data inputs ; 20                          ;
 ; boundary_port         ; 241                         ;
 ;                       ;                             ;
-; Max LUT depth         ; 2.80                        ;
-; Average LUT depth     ; 1.15                        ;
+; Max LUT depth         ; 3.00                        ;
+; Average LUT depth     ; 1.18                        ;
 +-----------------------+-----------------------------+
 
 
@@ -697,7 +697,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 16.1.0 Build 196 10/24/2016 SJ Lite Edition
-    Info: Processing started: Mon May 28 11:01:36 2018
+    Info: Processing started: Mon May 28 13:33:05 2018
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off project -c project
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
@@ -717,8 +717,6 @@ Info (12021): Found 1 design units, including 1 entities, in source file clock50
 Info (12021): Found 1 design units, including 1 entities, in source file display_control.v
     Info (12023): Found entity 1: display_control File: C:/intelFPGA_lite/16.1/SOCO/project/display_control.v Line: 1
 Info (12127): Elaborating entity "DE1_SOC_golden_top" for the top level hierarchy
-Warning (10858): Verilog HDL warning at DE1_SOC_golden_top.v(253): object clkout used but never assigned File: C:/intelFPGA_lite/16.1/SOCO/project/DE1_SOC_golden_top.v Line: 253
-Warning (10030): Net "clkout" at DE1_SOC_golden_top.v(253) has no driver or initial value, using a default initial value '0' File: C:/intelFPGA_lite/16.1/SOCO/project/DE1_SOC_golden_top.v Line: 253
 Warning (10034): Output port "DRAM_ADDR" at DE1_SOC_golden_top.v(100) has no driver File: C:/intelFPGA_lite/16.1/SOCO/project/DE1_SOC_golden_top.v Line: 100
 Warning (10034): Output port "DRAM_BA" at DE1_SOC_golden_top.v(101) has no driver File: C:/intelFPGA_lite/16.1/SOCO/project/DE1_SOC_golden_top.v Line: 101
 Warning (10034): Output port "HEX4" at DE1_SOC_golden_top.v(137) has no driver File: C:/intelFPGA_lite/16.1/SOCO/project/DE1_SOC_golden_top.v Line: 137
@@ -766,7 +764,7 @@ Warning (10230): Verilog HDL assignment warning at display_control.v(26): trunca
 Warning (10230): Verilog HDL assignment warning at display_control.v(27): truncated value with size 8 to match size of target (1) File: C:/intelFPGA_lite/16.1/SOCO/project/display_control.v Line: 27
 Warning (10230): Verilog HDL assignment warning at display_control.v(61): truncated value with size 32 to match size of target (9) File: C:/intelFPGA_lite/16.1/SOCO/project/display_control.v Line: 61
 Warning (10230): Verilog HDL assignment warning at display_control.v(72): truncated value with size 32 to match size of target (3) File: C:/intelFPGA_lite/16.1/SOCO/project/display_control.v Line: 72
-Warning (10230): Verilog HDL assignment warning at display_control.v(85): truncated value with size 32 to match size of target (9) File: C:/intelFPGA_lite/16.1/SOCO/project/display_control.v Line: 85
+Warning (10230): Verilog HDL assignment warning at display_control.v(85): truncated value with size 32 to match size of target (10) File: C:/intelFPGA_lite/16.1/SOCO/project/display_control.v Line: 85
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_ab84.tdf
     Info (12023): Found entity 1: altsyncram_ab84 File: C:/intelFPGA_lite/16.1/SOCO/project/db/altsyncram_ab84.tdf Line: 28
 Info (12021): Found 1 design units, including 1 entities, in source file db/mux_elc.tdf
@@ -787,7 +785,7 @@ Info (12021): Found 1 design units, including 1 entities, in source file db/cmpr
     Info (12023): Found entity 1: cmpr_99c File: C:/intelFPGA_lite/16.1/SOCO/project/db/cmpr_99c.tdf Line: 23
 Info (12033): Analysis and Synthesis generated SignalTap II or debug node instance "auto_signaltap_0"
 Info (11170): Starting IP generation for the debug fabric: alt_sld_fab.
-Info (11172): 2018.05.28.11:01:54 Progress: Loading sld3172de05/alt_sld_fab_wrapper_hw.tcl
+Info (11172): 2018.05.28.13:33:22 Progress: Loading sld3172de05/alt_sld_fab_wrapper_hw.tcl
 Info (11172): Alt_sld_fab.alt_sld_fab: SLD fabric agents which did not specify prefer_host were connected to JTAG
 Info (11172): Alt_sld_fab: Generating alt_sld_fab "alt_sld_fab" for QUARTUS_SYNTH
 Info (11172): Alt_sld_fab: "alt_sld_fab" instantiated alt_sld_fab "alt_sld_fab"
@@ -816,6 +814,7 @@ Warning (13034): The following nodes have both tri-state and non-tri-state drive
     Warning (13035): Inserted always-enabled tri-state buffer between "GPIO_0[9]" and its non-tri-state driver. File: C:/intelFPGA_lite/16.1/SOCO/project/DE1_SOC_golden_top.v Line: 126
     Warning (13035): Inserted always-enabled tri-state buffer between "GPIO_0[10]" and its non-tri-state driver. File: C:/intelFPGA_lite/16.1/SOCO/project/DE1_SOC_golden_top.v Line: 126
     Warning (13035): Inserted always-enabled tri-state buffer between "GPIO_0[11]" and its non-tri-state driver. File: C:/intelFPGA_lite/16.1/SOCO/project/DE1_SOC_golden_top.v Line: 126
+    Warning (13035): Inserted always-enabled tri-state buffer between "GPIO_0[12]" and its non-tri-state driver. File: C:/intelFPGA_lite/16.1/SOCO/project/DE1_SOC_golden_top.v Line: 126
     Warning (13035): Inserted always-enabled tri-state buffer between "GPIO_0[13]" and its non-tri-state driver. File: C:/intelFPGA_lite/16.1/SOCO/project/DE1_SOC_golden_top.v Line: 126
     Warning (13035): Inserted always-enabled tri-state buffer between "GPIO_0[14]" and its non-tri-state driver. File: C:/intelFPGA_lite/16.1/SOCO/project/DE1_SOC_golden_top.v Line: 126
 Warning (13039): The following bidirectional pins have no drivers
@@ -901,19 +900,22 @@ Warning (13032): The following tri-state nodes are fed by constants
     Warning (13033): The pin "GPIO_0[0]" is fed by GND File: C:/intelFPGA_lite/16.1/SOCO/project/DE1_SOC_golden_top.v Line: 126
     Warning (13033): The pin "GPIO_0[1]" is fed by VCC File: C:/intelFPGA_lite/16.1/SOCO/project/DE1_SOC_golden_top.v Line: 126
     Warning (13033): The pin "GPIO_0[2]" is fed by GND File: C:/intelFPGA_lite/16.1/SOCO/project/DE1_SOC_golden_top.v Line: 126
-    Warning (13033): The pin "GPIO_0[3]" is fed by GND File: C:/intelFPGA_lite/16.1/SOCO/project/DE1_SOC_golden_top.v Line: 126
-    Warning (13033): The pin "GPIO_0[4]" is fed by GND File: C:/intelFPGA_lite/16.1/SOCO/project/DE1_SOC_golden_top.v Line: 126
+    Warning (13033): The pin "GPIO_0[3]" is fed by VCC File: C:/intelFPGA_lite/16.1/SOCO/project/DE1_SOC_golden_top.v Line: 126
+    Warning (13033): The pin "GPIO_0[4]" is fed by VCC File: C:/intelFPGA_lite/16.1/SOCO/project/DE1_SOC_golden_top.v Line: 126
     Warning (13033): The pin "GPIO_0[5]" is fed by GND File: C:/intelFPGA_lite/16.1/SOCO/project/DE1_SOC_golden_top.v Line: 126
     Warning (13033): The pin "GPIO_0[6]" is fed by GND File: C:/intelFPGA_lite/16.1/SOCO/project/DE1_SOC_golden_top.v Line: 126
-    Warning (13033): The pin "GPIO_0[7]" is fed by GND File: C:/intelFPGA_lite/16.1/SOCO/project/DE1_SOC_golden_top.v Line: 126
-    Warning (13033): The pin "GPIO_0[12]" is fed by GND File: C:/intelFPGA_lite/16.1/SOCO/project/DE1_SOC_golden_top.v Line: 126
+    Warning (13033): The pin "GPIO_0[7]" is fed by VCC File: C:/intelFPGA_lite/16.1/SOCO/project/DE1_SOC_golden_top.v Line: 126
     Warning (13033): The pin "GPIO_0[15]" is fed by GND File: C:/intelFPGA_lite/16.1/SOCO/project/DE1_SOC_golden_top.v Line: 126
 Warning (13009): TRI or OPNDRN buffers permanently enabled
     Warning (13010): Node "GPIO_0[1]~synth" File: C:/intelFPGA_lite/16.1/SOCO/project/DE1_SOC_golden_top.v Line: 126
+    Warning (13010): Node "GPIO_0[3]~synth" File: C:/intelFPGA_lite/16.1/SOCO/project/DE1_SOC_golden_top.v Line: 126
+    Warning (13010): Node "GPIO_0[4]~synth" File: C:/intelFPGA_lite/16.1/SOCO/project/DE1_SOC_golden_top.v Line: 126
+    Warning (13010): Node "GPIO_0[7]~synth" File: C:/intelFPGA_lite/16.1/SOCO/project/DE1_SOC_golden_top.v Line: 126
     Warning (13010): Node "GPIO_0[8]~synth" File: C:/intelFPGA_lite/16.1/SOCO/project/DE1_SOC_golden_top.v Line: 126
     Warning (13010): Node "GPIO_0[9]~synth" File: C:/intelFPGA_lite/16.1/SOCO/project/DE1_SOC_golden_top.v Line: 126
     Warning (13010): Node "GPIO_0[10]~synth" File: C:/intelFPGA_lite/16.1/SOCO/project/DE1_SOC_golden_top.v Line: 126
     Warning (13010): Node "GPIO_0[11]~synth" File: C:/intelFPGA_lite/16.1/SOCO/project/DE1_SOC_golden_top.v Line: 126
+    Warning (13010): Node "GPIO_0[12]~synth" File: C:/intelFPGA_lite/16.1/SOCO/project/DE1_SOC_golden_top.v Line: 126
     Warning (13010): Node "GPIO_0[13]~synth" File: C:/intelFPGA_lite/16.1/SOCO/project/DE1_SOC_golden_top.v Line: 126
     Warning (13010): Node "GPIO_0[14]~synth" File: C:/intelFPGA_lite/16.1/SOCO/project/DE1_SOC_golden_top.v Line: 126
 Warning (13024): Output pins are stuck at VCC or GND
@@ -1039,16 +1041,16 @@ Warning (21074): Design contains 29 input pin(s) that do not drive logic
     Warning (15610): No output dependent on input pin "TD_DATA[7]" File: C:/intelFPGA_lite/16.1/SOCO/project/DE1_SOC_golden_top.v Line: 229
     Warning (15610): No output dependent on input pin "TD_HS" File: C:/intelFPGA_lite/16.1/SOCO/project/DE1_SOC_golden_top.v Line: 230
     Warning (15610): No output dependent on input pin "TD_VS" File: C:/intelFPGA_lite/16.1/SOCO/project/DE1_SOC_golden_top.v Line: 232
-Info (21057): Implemented 1088 device resources after synthesis - the final resource count might be different
+Info (21057): Implemented 1091 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 35 input pins
     Info (21059): Implemented 114 output pins
     Info (21060): Implemented 96 bidirectional pins
-    Info (21061): Implemented 831 logic cells
+    Info (21061): Implemented 834 logic cells
     Info (21064): Implemented 11 RAM segments
-Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 273 warnings
-    Info: Peak virtual memory: 4923 megabytes
-    Info: Processing ended: Mon May 28 11:02:05 2018
-    Info: Elapsed time: 00:00:29
-    Info: Total CPU time (on all processors): 00:00:59
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 275 warnings
+    Info: Peak virtual memory: 4936 megabytes
+    Info: Processing ended: Mon May 28 13:33:39 2018
+    Info: Elapsed time: 00:00:34
+    Info: Total CPU time (on all processors): 00:01:06
 
 

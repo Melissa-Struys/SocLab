@@ -256,7 +256,7 @@ module DE1_SOC_golden_top(
  assign GPIO_0[2] = 0;
  assign GPIO_0[6] = 0;
  assign GPIO_0[15] = 0;
- assign GPIO_0[12] = clkout; 
+ assign GPIO_0[12] = clk_out; 
  
  wire [3:0] y_latch;
  wire [2:0] rgb1;
