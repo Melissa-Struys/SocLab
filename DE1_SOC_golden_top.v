@@ -283,10 +283,12 @@ module DE1_SOC_golden_top(
  
  parameter pixel_depth = 8;
  parameter data_width = pixel_depth*6;
- parameter addr_width = 11;
+ parameter addr_width = 10;
  
  wire [data_width-1:0] data;
  wire [addr_width-1:0] addr;
+ 
+ wire clk_10MHz;
  
 //=======================================================
 //  Structural coding
@@ -358,12 +360,15 @@ ledctrl lc(	.clk_in(CLOCK_50),
 				.lat(GPIO_0[13]), 
 				.oe(GPIO_0[14]), 
 				.addr(addr), 
-				.data(data)
-				);
-				
-memory m(	.address(addr),
-				.clock(CLOCK_50),
-				.q(data)
+				.data(data),
 				);
 
+
+				
+/*
+convert c(	.clk(clk_out), 
+				.address(addr), 
+				.data_out(data)
+				);
+*/
 endmodule

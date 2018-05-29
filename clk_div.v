@@ -5,7 +5,7 @@ module clk_div(clk_in, clk_out, rst);
  reg clk;
  assign clk_out = clk;
  
- parameter out_period_count = 5-1; // 50MHz/10MHz-1
+ parameter out_period_count = 4; // 50MHz/10MHz-1
  reg [(out_period_count-1)/2:0] count;
  
  always@(posedge clk_in)

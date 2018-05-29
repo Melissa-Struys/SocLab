@@ -1,7 +1,7 @@
 module display_control(clk, rst, display_ena, ram_data, ram_address, display_rgb1, display_rgb2, d_addr, d_clk, d_oe, d_lat);
  input clk, rst, display_ena;
  input [47:0] ram_data;
- output [8:0] ram_address;
+ output [9:0] ram_address;
  output [2:0] display_rgb1, display_rgb2;
  output  [3:0] d_addr;
  output  d_clk, d_oe, d_lat;
@@ -49,38 +49,11 @@ module display_control(clk, rst, display_ena, ram_data, ram_address, display_rgb
  //st5_oe_high
  //st6_oe_low
  
- memory m1(	.address(address_ctr),
+ convert c(	.address(address_ctr),
 				.clock(clk),
 				.q(kleur)
 				);
-
- memory m2(	.address(address_ctr+1024),
-				.clock(clk),
-				.q(kleur2)
-				);
-				
-				/*
- memory m2(	.address(ram_data[15:8]),
-				.clock(clk),
-				.q(green1)
-				);
- memory m3(	.address(ram_data[23:16]),
-				.clock(clk),
-				.q(blue1)
-				);
- memory m4(	.address(ram_data[31:24]),
-				.clock(clk),
-				.q(red2)
-				);
- memory m5(	.address(ram_data[39:32]),
-				.clock(clk),
-				.q(green2)
-				);
- memory m6(	.address(ram_data[47:40]),
-				.clock(clk),
-				.q(blue2)
-				);
-				*/
+	
  always@(posedge clk) 
 	begin
 		if (rst) begin

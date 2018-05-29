@@ -1,0 +1,14 @@
+module convert(clk, address, data_out);
+ input clk;
+ input [10:0] address;
+ output [47:0] data_out;
+
+ wire [10:0] addr;
+ wire [3:0] data;
+ 
+ memory m1(	.address(addr),
+				.clock(clk),
+				.q(data)
+				);
+
+ 

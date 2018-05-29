@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simPackage>
+ <file path="klokje_sim/klokje.vo" type="VERILOG" />
+ <topLevel name="klokje" />
+ <deviceFamily name="cyclonev" />
+</simPackage>

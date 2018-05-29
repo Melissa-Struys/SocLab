@@ -1,12 +1,12 @@
 module ledctrl(clk_in, rst, clk_out, rgb1, rgb2, led_addr, lat, oe, addr, data);
- parameter num_panels = 2;
+ parameter num_panels = 1;
  parameter pixel_depth = 8;
  parameter panel_width = 64;
  parameter panel_height = 32;
  parameter data_width = pixel_depth*6;
- parameter addr_width = 11;
+ parameter addr_width = 10;
  parameter img_width = panel_width*num_panels;
- parameter img_width_log2 = 7;
+ parameter img_width_log2 = 6;
 
 
  input clk_in, rst;
@@ -18,19 +18,26 @@ module ledctrl(clk_in, rst, clk_out, rgb1, rgb2, led_addr, lat, oe, addr, data);
  
  wire clk;
  
+ klokje klok (
+		.refclk   (clk_in),   //  refclk.clk
+		.rst      (rst),      //   reset.reset
+		.outclk_0 (clk), // outclk0.clk
+		.locked   (0)    //  locked.export
+	);
+/* 
  clk_div cd(	.clk_in(clk_in), 
 					.clk_out(clk), 
 					.rst(rst)
 					);
  
- 
+ */
  
   reg[2:0] state, next_state;
  //st0_init
  //st1_read_pixel_data
  //st2_incr_ram_addr
- //st3_latch
- //st4_incr_led_addr
+ //st3_incr_led_addr
+ //st4_latch
  
  reg [img_width_log2:0] col_count, next_col_count;
  reg [pixel_depth-1:0] bpp_count, next_bpp_count;
@@ -40,7 +47,7 @@ module ledctrl(clk_in, rst, clk_out, rgb1, rgb2, led_addr, lat, oe, addr, data);
  wire [2:0] next_rgb1, next_rgb2;
  reg s_oe, s_lat, s_clk_out;
  
- assign led_addr = s_led_addr; //plaats veranderen?
+ assign led_addr = s_led_addr;
  assign addr = s_ram_addr;
  assign rgb1 = s_rgb1;
  assign rgb2 = s_rgb2;
@@ -153,12 +160,20 @@ module ledctrl(clk_in, rst, clk_out, rgb1, rgb2, led_addr, lat, oe, addr, data);
 				end
 			2: begin
 					s_clk_out = 1;
-					s_oe = 1;
-					next_ram_addr = s_ram_addr + 1;
+					s_oe = 0;
+					if(s_ram_addr == 1023) begin
+						next_ram_addr = 0;
+					end else begin
+						next_ram_addr = s_ram_addr +1;
+					end
 					next_state = 1;
 				end
-			3: begin
-					next_led_addr = s_led_addr + 1;
+			3: begin					
+					if(s_led_addr == 15) begin
+						next_led_addr = 0;
+					end else begin
+						next_led_addr = s_led_addr + 1;
+					end
 					next_col_count = 0;
 					next_state = 4;
 				end
