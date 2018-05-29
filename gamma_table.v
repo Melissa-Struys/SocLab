@@ -11,10 +11,10 @@ module gamma_table(clk, val_in, val_out);
  
  reg [2**color_res-1:0]lut_type[color_res-1:0];
  
- 
+ /*
  function lut_init;
 	input c;
-	reg [2**color_res-1:0]lut_var;
+	reg [2**color_res-1:0]lut_var[0:color_res-1];
 	reg lut_element;
 	reg [2**color_res-1:0] i;
 	begin
@@ -28,12 +28,12 @@ module gamma_table(clk, val_in, val_out);
  
  parameter c = 2.8;
  
- parameter [2**color_res-1:0]gamma_lut = lut_init(c);
-
+ parameter [2**color_res-1:0]gamma_lut[0:color_res-1] = lut_init(c);
+*/
 
  always@(posedge clk)
 	begin
-		val_o = gamma_lut[val_in];
+		val_o = val_in;
 	end
 
 endmodule

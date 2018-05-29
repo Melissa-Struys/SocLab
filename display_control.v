@@ -22,7 +22,7 @@ module display_control(clk, rst, display_ena, ram_data, ram_address, display_rgb
  reg [8:0] pwm_ctr;
  reg pwm_inc, row_inc, col_inc;
  
- wire [7:0] red1, red2, green1, green2, blue1, blue2;
+ reg [7:0] red1, red2, green1, green2, blue1, blue2;
 	assign display_rgb1[0] = red1;
 	assign display_rgb1[1] = green1;
 	assign display_rgb1[2] = blue1;
@@ -37,6 +37,9 @@ module display_control(clk, rst, display_ena, ram_data, ram_address, display_rgb
  
  reg next_oe, disp_oe, disp_lat, disp_clk;
  
+ reg [10:0] teller;
+ wire [3:0] kleur, kleur2;
+ 
  reg[3:0] state, next_state;
  //st0_idle
  //st1_clock_high
@@ -46,31 +49,38 @@ module display_control(clk, rst, display_ena, ram_data, ram_address, display_rgb
  //st5_oe_high
  //st6_oe_low
  
- gamma_table gt1(	.clk(clk), 
-						.val_in(ram_data[7:0]), 
-						.val_out(red1)
-						);
- gamma_table gt2(	.clk(clk), 
-						.val_in(ram_data[15:8]), 
-						.val_out(green1)
-						);
- gamma_table gt3(	.clk(clk), 
-						.val_in(ram_data[23:16]), 
-						.val_out(blue1)
-						);
- gamma_table gt4(	.clk(clk), 
-						.val_in(ram_data[31:24]), 
-						.val_out(red2)
-						);
- gamma_table gt5(	.clk(clk), 
-						.val_in(ram_data[39:32]), 
-						.val_out(green2)
-						);
- gamma_table gt6(	.clk(clk), 
-						.val_in(ram_data[47:40]), 
-						.val_out(blue2)
-						);
- 
+ memory m1(	.address(address_ctr),
+				.clock(clk),
+				.q(kleur)
+				);
+
+ memory m2(	.address(address_ctr+1024),
+				.clock(clk),
+				.q(kleur2)
+				);
+				
+				/*
+ memory m2(	.address(ram_data[15:8]),
+				.clock(clk),
+				.q(green1)
+				);
+ memory m3(	.address(ram_data[23:16]),
+				.clock(clk),
+				.q(blue1)
+				);
+ memory m4(	.address(ram_data[31:24]),
+				.clock(clk),
+				.q(red2)
+				);
+ memory m5(	.address(ram_data[39:32]),
+				.clock(clk),
+				.q(green2)
+				);
+ memory m6(	.address(ram_data[47:40]),
+				.clock(clk),
+				.q(blue2)
+				);
+				*/
  always@(posedge clk) 
 	begin
 		if (rst) begin
@@ -94,18 +104,41 @@ module display_control(clk, rst, display_ena, ram_data, ram_address, display_rgb
 			wait_ctr = wait_ctr + 1;
 		end
 	end 
+ /*
+ always@(posedge clk) 
+	begin			
+		if (rst) begin
+			teller = 0;
+		end else begin
+			if(teller == 2047) begin
+				teller = 0;
+			end else begin
+				teller = teller + 1;
+			end
+		end
+	end
+ */
  
  always@(posedge clk) 
 	begin
 		if (rst) begin
 			address_ctr = 0;
+			teller = 0;
 		end else begin			
 			if (col_inc == 1) begin
 				if(pwm_inc == 1 && row_inc == 0) begin
 					address_ctr = {address_ctr[9:6], 6'b000000} ;
+					teller = 0;
 				end else begin
 					address_ctr = address_ctr + 1;
+					teller = teller + 1;
 				end
+				red1 = kleur[0];
+				green1 = kleur[1];
+				blue1 = kleur[2];
+				red2 = kleur2[0];
+				green2 = kleur2[1];
+				blue2 = kleur2[2];
 			end
 		end
 	end 

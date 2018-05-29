@@ -281,6 +281,13 @@ module DE1_SOC_golden_top(
  wire [47:0] ram_data; 
  wire [8:0] ram_address;
  
+ parameter pixel_depth = 8;
+ parameter data_width = pixel_depth*6;
+ parameter addr_width = 11;
+ 
+ wire [data_width-1:0] data;
+ wire [addr_width-1:0] addr;
+ 
 //=======================================================
 //  Structural coding
 //=======================================================
@@ -321,7 +328,7 @@ matrix mx(	.r0(GPIO_0[1]),
 				.clkout(clkout),
 				.y_latch(y_latch)
 				);
-*/
+
 display_control dc(	.clk(CLOCK_50), 
 							.rst(!KEY[1]), 
 							.display_ena(1), 
@@ -340,6 +347,23 @@ animation a(	.clk(CLOCK_50),
 					.ram_address(ram_address), 
 					.ram_data(ram_data)
 					);
+*/
 
+ledctrl lc(	.clk_in(CLOCK_50), 
+				.rst(!KEY[1]), 
+				.clk_out(clk_out), 
+				.rgb1(rgb1), 
+				.rgb2(rgb2), 
+				.led_addr(row), 
+				.lat(GPIO_0[13]), 
+				.oe(GPIO_0[14]), 
+				.addr(addr), 
+				.data(data)
+				);
 				
+memory m(	.address(addr),
+				.clock(CLOCK_50),
+				.q(data)
+				);
+
 endmodule
