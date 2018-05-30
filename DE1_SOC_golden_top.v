@@ -261,15 +261,15 @@ module DE1_SOC_golden_top(
  wire [3:0] y_latch;
  wire [2:0] rgb1;
  
- assign GPIO_0[1] = rgb1[0];
+ assign GPIO_0[1] = rgb1[2];
  assign GPIO_0[0] = rgb1[1];
- assign GPIO_0[3] = rgb1[2];
+ assign GPIO_0[3] = rgb1[0];
  
  wire [2:0] rgb2;
  
- assign GPIO_0[5] = rgb2[0];
+ assign GPIO_0[5] = rgb2[2];
  assign GPIO_0[4] = rgb2[1];
- assign GPIO_0[7] = rgb2[2];
+ assign GPIO_0[7] = rgb2[0];
  
  wire [3:0] row;
 	
@@ -360,15 +360,12 @@ ledctrl lc(	.clk_in(CLOCK_50),
 				.lat(GPIO_0[13]), 
 				.oe(GPIO_0[14]), 
 				.addr(addr), 
-				.data(data),
+				.data(data)
 				);
 
-
-				
-/*
 convert c(	.clk(clk_out), 
 				.address(addr), 
 				.data_out(data)
 				);
-*/
+
 endmodule

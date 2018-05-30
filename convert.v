@@ -3,7 +3,7 @@ module convert(clk, address, data_out);
  input [9:0] address;
  output [47:0] data_out;
 
- wire [9:0] addr_upper, addr_lower;
+ wire [10:0] addr_upper, addr_lower;
 	assign addr_upper = {1'b0, address};
 	assign addr_lower = {1'b1, address};
  
@@ -26,9 +26,9 @@ module convert(clk, address, data_out);
  always@(posedge clk)
 	begin
 		case(data_in_upper)
-			1:	data_upper = 24'b000000000011001101100110;
+			1:	data_upper = 24'b000000000000000001100110;
 			2: data_upper = 24'b111111110000000000000000;
-			3: data_upper = 24'b111111111001111100000000;
+			3: data_upper = 24'b111111110011001000000000;
 			4: data_upper = 24'b111111111111111100000000;
 			5: data_upper = 24'b001100111111111100000000;
 			6: data_upper = 24'b000000001001101111111111;
@@ -43,9 +43,9 @@ module convert(clk, address, data_out);
 		endcase
 		
 		case(data_in_lower)
-			1:	data_lower = 24'b000000000011001101100110;
+			1:	data_lower = 24'b000000000000000001100110;
 			2: data_lower = 24'b111111110000000000000000;
-			3: data_lower = 24'b111111111001111100000000;
+			3: data_lower = 24'b111111110011001000000000;
 			4: data_lower = 24'b111111111111111100000000;
 			5: data_lower = 24'b001100111111111100000000;
 			6: data_lower = 24'b000000001001101111111111;

@@ -5,8 +5,9 @@ module ledctrl(clk_in, rst, clk_out, rgb1, rgb2, led_addr, lat, oe, addr, data);
  parameter panel_height = 32;
  parameter data_width = pixel_depth*6;
  parameter addr_width = 10;
- parameter img_width = panel_width*num_panels;
- parameter img_width_log2 = 6;
+ parameter img_width = 64; //panel_width*num_panels;
+ parameter img_width_log2 = 7;
+ parameter wait_max = 3;
 
 
  input clk_in, rst;
@@ -24,14 +25,7 @@ module ledctrl(clk_in, rst, clk_out, rgb1, rgb2, led_addr, lat, oe, addr, data);
 		.outclk_0 (clk), // outclk0.clk
 		.locked   (0)    //  locked.export
 	);
-/* 
- clk_div cd(	.clk_in(clk_in), 
-					.clk_out(clk), 
-					.rst(rst)
-					);
- 
- */
- 
+
   reg[2:0] state, next_state;
  //st0_init
  //st1_read_pixel_data
@@ -60,6 +54,7 @@ module ledctrl(clk_in, rst, clk_out, rgb1, rgb2, led_addr, lat, oe, addr, data);
  wire [pixel_depth-1:0] upper_r, upper_g, upper_b, lower_r, lower_g, lower_b;
  reg r1, g1, b1, r2, g2, b2;
 	
+ 
  assign upper = data[data_width-1:data_width/2];
  assign lower = data[data_width/2-1:0];
  assign upper_r = upper[3*pixel_depth-1:2*pixel_depth];
@@ -68,17 +63,18 @@ module ledctrl(clk_in, rst, clk_out, rgb1, rgb2, led_addr, lat, oe, addr, data);
  assign lower_r = lower[3*pixel_depth-1:2*pixel_depth];
  assign lower_g = lower[2*pixel_depth-1:pixel_depth];
  assign lower_b = lower[pixel_depth-1:0];
+ 
  assign next_rgb1 = {r1, g1, b1};
  assign next_rgb2 = {r2, g2, b2};
 
-	
+ 
  always@(posedge clk)
 	begin
 		if(rst) begin
 			state = 0;
 			col_count = 0;
 			bpp_count = 0;
-			s_led_addr = 4'b1111;
+			s_led_addr = 15;
 			s_ram_addr = 0;
 			s_rgb1 = 0;
 			s_rgb2 = 0;
@@ -94,7 +90,6 @@ module ledctrl(clk_in, rst, clk_out, rgb1, rgb2, led_addr, lat, oe, addr, data);
 	end
 	
 	
-	
  always@(state, col_count, bpp_count, s_led_addr, s_ram_addr, s_rgb1, s_rgb2, data)
 	begin
 		next_col_count = col_count;
@@ -108,6 +103,7 @@ module ledctrl(clk_in, rst, clk_out, rgb1, rgb2, led_addr, lat, oe, addr, data);
 		s_clk_out = 0;
 		s_lat = 0;
 		s_oe = 0;
+
 		
 		case(state)
 			0: begin
@@ -117,7 +113,7 @@ module ledctrl(clk_in, rst, clk_out, rgb1, rgb2, led_addr, lat, oe, addr, data);
 						end else begin
 							next_bpp_count = bpp_count + 1;
 						end
-					end
+					end					
 					next_state = 1;
 				end
 			1: begin
@@ -150,7 +146,8 @@ module ledctrl(clk_in, rst, clk_out, rgb1, rgb2, led_addr, lat, oe, addr, data);
 						b2 = 1;
 					end else begin
 						b2 = 0;
-					end	
+					end
+						
 					next_col_count = col_count + 1;
 					if(col_count < img_width) begin
 						next_state = 2;
@@ -160,7 +157,6 @@ module ledctrl(clk_in, rst, clk_out, rgb1, rgb2, led_addr, lat, oe, addr, data);
 				end
 			2: begin
 					s_clk_out = 1;
-					s_oe = 0;
 					if(s_ram_addr == 1023) begin
 						next_ram_addr = 0;
 					end else begin
@@ -169,6 +165,7 @@ module ledctrl(clk_in, rst, clk_out, rgb1, rgb2, led_addr, lat, oe, addr, data);
 					next_state = 1;
 				end
 			3: begin					
+					s_oe = 1;
 					if(s_led_addr == 15) begin
 						next_led_addr = 0;
 					end else begin
@@ -178,6 +175,7 @@ module ledctrl(clk_in, rst, clk_out, rgb1, rgb2, led_addr, lat, oe, addr, data);
 					next_state = 4;
 				end
 			4: begin
+					s_oe = 1;
 					s_lat = 1;
 					next_state = 0;
 				end
