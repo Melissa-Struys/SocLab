@@ -1,11 +1,11 @@
 module convert(clk, address, data_out);
  input clk;
- input [9:0] address;
+ input [14:0] address;
  output [47:0] data_out;
 
- wire [10:0] addr_upper, addr_lower;
-	assign addr_upper = {1'b0, address};
-	assign addr_lower = {1'b1, address};
+ wire [14:0] addr_upper, addr_lower;
+	assign addr_upper = address;
+	assign addr_lower = address + 1024;
  
  wire [3:0] data_in_upper, data_in_lower;
  

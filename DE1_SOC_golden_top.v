@@ -283,7 +283,7 @@ module DE1_SOC_golden_top(
  
  parameter pixel_depth = 8;
  parameter data_width = pixel_depth*6;
- parameter addr_width = 10;
+ parameter addr_width = 15;
  
  wire [data_width-1:0] data;
  wire [addr_width-1:0] addr;
@@ -309,47 +309,6 @@ ps2 muis(
            .oY_MOV2(HEX3),   //higher SEG of mouse displacement display for Y axis.
 			  .y_latch_out(y_latch)
            );
-/*
-matrix mx(	.r0(GPIO_0[1]), 
-				.g0(GPIO_0[0]), 
-				.b0(GPIO_0[3]), 
-				.r1(GPIO_0[5]), 
-				.g1(GPIO_0[4]), 
-				.b1(GPIO_0[7]), 
-				.a(GPIO_0[9]), 
-				.b(GPIO_0[8]), 
-				.c(GPIO_0[11]), 
-				.d(GPIO_0[10]), 
-				.clk(CLOCK_50), 
-				.stb(GPIO_0[13]), 
-				.oe(GPIO_0[14]),
-				.reset(!KEY[1]),
-				.knop1(SW[0]),
-				.knop2(SW[1]),
-				.knop3(SW[2]),
-				.clkout(clkout),
-				.y_latch(y_latch)
-				);
-
-display_control dc(	.clk(CLOCK_50), 
-							.rst(!KEY[1]), 
-							.display_ena(1), 
-							.ram_data(ram_data), 
-							.ram_address(ram_address),
-							.display_rgb1(rgb1), 
-							.display_rgb2(rgb2), 
-							.d_addr(row), 
-							.d_clk(clk_out), 
-							.d_oe(GPIO_0[14]), 
-							.d_lat(GPIO_0[13])
-							);
-
-animation a(	.clk(CLOCK_50), 
-					.rst(!KEY[1]), 
-					.ram_address(ram_address), 
-					.ram_data(ram_data)
-					);
-*/
 
 ledctrl lc(	.clk_in(CLOCK_50), 
 				.rst(!KEY[1]), 
@@ -360,7 +319,8 @@ ledctrl lc(	.clk_in(CLOCK_50),
 				.lat(GPIO_0[13]), 
 				.oe(GPIO_0[14]), 
 				.addr(addr), 
-				.data(data)
+				.data(data),
+				.y_latch(y_latch)
 				);
 
 convert c(	.clk(clk_out), 
