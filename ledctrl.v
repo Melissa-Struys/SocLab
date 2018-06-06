@@ -24,8 +24,8 @@ module ledctrl(clk_in, rst, clk_out, rgb1, rgb2, led_addr, lat, oe, addr, data, 
  reg [3:0] vorige_muis, verschil_muis;
 	assign muis = y_latch;
  reg verschoven, naarbegin;
- reg [10:0] frames;
- reg [3:0] foto;
+ reg [5:0] s_frame, next_frame;
+ reg [3:0] s_foto, next_foto;
  
  
  klokje klok (
@@ -52,7 +52,7 @@ module ledctrl(clk_in, rst, clk_out, rgb1, rgb2, led_addr, lat, oe, addr, data, 
  reg s_oe, s_lat, s_clk_out;
  
  assign led_addr = s_led_addr;
- assign addr = {foto, s_ram_addr};
+ assign addr = {s_foto, s_ram_addr};
  assign rgb1 = s_rgb1;
  assign rgb2 = s_rgb2;
  assign oe = s_oe;
@@ -81,13 +81,15 @@ module ledctrl(clk_in, rst, clk_out, rgb1, rgb2, led_addr, lat, oe, addr, data, 
  always@(posedge clk)
 	begin
 		if(rst) begin
-			state = 0;
+			state = 1;
 			col_count = 0;
 			bpp_count = 0;
 			s_led_addr = 15;
 			s_ram_addr = 0;
 			s_rgb1 = 0;
 			s_rgb2 = 0;
+			s_foto = 0;
+			s_frame = 0;
 		end else begin
 			state = next_state;
 			col_count = next_col_count;
@@ -96,17 +98,21 @@ module ledctrl(clk_in, rst, clk_out, rgb1, rgb2, led_addr, lat, oe, addr, data, 
 			s_ram_addr = next_ram_addr;
 			s_rgb1 = next_rgb1;
 			s_rgb2 = next_rgb2;
-			vorige_muis = muis;
+			s_foto = next_foto;
+			s_frame = next_frame;
+			//vorige_muis = muis;
 		end
 	end
 	
  
- always@(state, col_count, bpp_count, s_led_addr, s_ram_addr, s_rgb1, s_rgb2, data)
+ always@(state, col_count, bpp_count, s_led_addr, s_ram_addr, s_rgb1, s_rgb2, data, s_frame, s_foto)
 	begin
 		next_col_count = col_count;
 		next_bpp_count = bpp_count;
 		next_led_addr = s_led_addr;
 		next_ram_addr = s_ram_addr;
+		next_foto = s_foto;
+		next_frame = s_frame;
 		s_clk_out = 0;
 		s_lat = 0;
 		s_oe = 0;
@@ -114,23 +120,21 @@ module ledctrl(clk_in, rst, clk_out, rgb1, rgb2, led_addr, lat, oe, addr, data, 
 		case(state)
 			0: begin
 					next_led_addr = 15;
-					frames = 0;
 					next_state = 1;
 				end
 			1: begin
 					if(s_led_addr == 4'b1111) begin
 						if(bpp_count == 8'b11111110) begin
 							next_bpp_count = 0;
-							
-							if(frames == 40) begin
-								if(foto == 11) begin
-									foto = 0;
+							if(s_frame == 5) begin
+								if(s_foto == 11) begin
+									next_foto = 0;
 								end else begin
-									foto = foto + 1;
+									next_foto = s_foto + 1;
 								end
-								frames = 0;
+								next_frame = 0;
 							end else begin
-								frames = frames + 1;
+								next_frame = s_frame + 1;
 							end
 							/*
 							if(muis != vorige_muis) begin
