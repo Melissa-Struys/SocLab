@@ -12,7 +12,7 @@ module ledctrl(clk_in, rst, clk_out, rgb1, rgb2, led_addr, lat, oe, addr, data, 
 
  input clk_in, rst;
  input [data_width-1:0] data;
- input [3:0] y_latch;
+ input [7:0] y_latch;
  output clk_out, lat, oe;
  output [2:0] rgb1, rgb2;
  output [3:0] led_addr;
@@ -20,9 +20,9 @@ module ledctrl(clk_in, rst, clk_out, rgb1, rgb2, led_addr, lat, oe, addr, data, 
  
  wire clk;
  
- reg [3:0] s_muis;
- wire [3:0] next_muis;
- reg [3:0] s_muisvorige, next_muisvorige, s_muisverschil, next_muisverschil;
+ reg [7:0] s_muis;
+ wire [7:0] next_muis;
+ reg [7:0] s_muisvorige, next_muisvorige, s_muisverschil, next_muisverschil;
 	assign next_muis = y_latch;
  reg verschoven, volgendefoto, stilstaan;
  reg [2:0] s_frame, next_frame;
@@ -101,6 +101,7 @@ module ledctrl(clk_in, rst, clk_out, rgb1, rgb2, led_addr, lat, oe, addr, data, 
 			s_rgb2 = next_rgb2;
 			s_foto = next_foto;
 			s_frame = next_frame;
+			s_muis = next_muis;
 		end
 	end
 	
@@ -126,32 +127,34 @@ module ledctrl(clk_in, rst, clk_out, rgb1, rgb2, led_addr, lat, oe, addr, data, 
 					if(s_led_addr == 4'b1111) begin
 						if(bpp_count == 8'b11111110) begin
 							next_bpp_count = 0;
-							if(next_muis[3] == 1) begin
-								if(s_ram_addr[5:0] == 6'b111111) begin
-									next_ram_addr[5:0] = 0;
-								end else begin
-									next_ram_addr = s_ram_addr + 1;
-								end
+							next_muisverschil = s_muis - s_muisvorige;
+							next_muisvorige = s_muis;
+							if(s_muisverschil != 0) begin
+								next_ram_addr[5:0] = s_ram_addr[5:0] + s_muisverschil[7:5];	
 								stilstaan = 0;
 							end else begin
 								stilstaan = 1;
 								next_ram_addr = 0;
-								if(s_frame == 3) begin
-									if(s_foto == 11) begin
-										next_foto = 0;
-									end else begin
-										next_foto = s_foto + 1;
-									end
-									next_frame = 0;
+							end
+							if(s_frame == 3) begin
+								if(s_foto == 11) begin
+									next_foto = 0;
 								end else begin
-									next_frame = s_frame + 1;
+									next_foto = s_foto + 1;
 								end
+								next_frame = 0;
+							end else begin
+								next_frame = s_frame + 1;
 							end
 						end else begin
 							next_bpp_count = bpp_count + 1;
 						end
-					end					
-					next_state = 2;
+					end	
+					if(bpp_count == 8'b11111110) begin
+						next_state = 6;
+					end else begin
+						next_state = 2;
+					end
 				end
 			2: begin
 					if(upper_r > bpp_count) begin
@@ -202,11 +205,11 @@ module ledctrl(clk_in, rst, clk_out, rgb1, rgb2, led_addr, lat, oe, addr, data, 
 					end else begin
 						if(s_ram_addr[5:0] == 6'b111111) begin
 							next_ram_addr[5:0] = 0;
-							/*if(s_foto == 11) begin
+							if(s_foto == 11) begin
 								next_foto = 0;
 							end else begin
 								next_foto = s_foto + 1;
-							end*/
+							end
 						end else begin
 							next_ram_addr = s_ram_addr + 1;
 						end
@@ -220,12 +223,12 @@ module ledctrl(clk_in, rst, clk_out, rgb1, rgb2, led_addr, lat, oe, addr, data, 
 							next_ram_addr[9:6] = 0;
 						end else begin
 							next_ram_addr[9:6] = s_ram_addr[9:6] + 1;
-						end/*
+						end
 						if(s_foto == 0) begin
 							next_foto = 11;
 						end else begin
 							next_foto = s_foto - 1;
-						end*/
+						end
 					end
 					if(s_led_addr == 15) begin
 						next_led_addr = 0;
@@ -238,8 +241,12 @@ module ledctrl(clk_in, rst, clk_out, rgb1, rgb2, led_addr, lat, oe, addr, data, 
 			5: begin
 					s_oe = 1;
 					s_lat = 1;
-					//s_muisvorige = next_muis;
 					next_state = 1;
+				end
+			6: begin
+					s_muisvorige = next_muisvorige;
+					s_muisverschil = next_muisverschil;
+					next_state = 2;
 				end
 		endcase
 	end

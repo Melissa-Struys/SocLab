@@ -4,11 +4,11 @@ module ps2(
            iCLK_50,  //clock source;
            PS2_CLK,  //ps2_clock signal inout;
            PS2_DAT,  //ps2_data  signal inout;
-           oLEFBUT,  //left button press display;
-           oRIGBUT,  //right button press display;
-           oMIDBUT,  //middle button press display;
-           oX_MOV1,  //lower SEG of mouse displacement display for X axis.
-           oX_MOV2,  //higher SEG of mouse displacement display for X axis.
+           //oLEFBUT,  //left button press display;
+           //oRIGBUT,  //right button press display;
+           //oMIDBUT,  //middle button press display;
+           //oX_MOV1,  //lower SEG of mouse displacement display for X axis.
+           //oX_MOV2,  //higher SEG of mouse displacement display for X axis.
            oY_MOV1,  //lower SEG of mouse displacement display for Y axis.
            oY_MOV2,   //higher SEG of mouse displacement display for Y axis.
 			  y_latch_out
@@ -25,20 +25,20 @@ input iCLK_50;
 inout PS2_CLK;
 inout PS2_DAT;
 
-output oLEFBUT;
-output oRIGBUT;
-output oMIDBUT;
-output [6:0] oX_MOV1;
-output [6:0] oX_MOV2;
+//output oLEFBUT;
+//output oRIGBUT;
+//output oMIDBUT;
+//output [6:0] oX_MOV1;
+//output [6:0] oX_MOV2;
 output [6:0] oY_MOV1;
 output [6:0] oY_MOV2;
 output [3:0] y_latch_out;
 
-assign y_latch_out = y_latch[3:0];
+assign y_latch_out = y_latch[7:0];
 
 //instantiation
-SEG7_LUT U1(.oSEG(oX_MOV1),.iDIG(x_latch[3:0]));
-SEG7_LUT U2(.oSEG(oX_MOV2),.iDIG(x_latch[7:4]));
+//SEG7_LUT U1(.oSEG(oX_MOV1),.iDIG(x_latch[3:0]));
+//SEG7_LUT U2(.oSEG(oX_MOV2),.iDIG(x_latch[7:4]));
 SEG7_LUT U3(.oSEG(oY_MOV1),.iDIG(y_latch[3:0]));
 SEG7_LUT U4(.oSEG(oY_MOV2),.iDIG(y_latch[7:4]));
 //instruction define, users can charge the instruction byte here for other purpose according to ps/2 mouse datasheet.
@@ -54,11 +54,11 @@ reg [1:0] cur_state,nex_state;
 reg ce,de;
 reg [3:0] byte_cnt,delay;
 reg [5:0] ct;
-reg [7:0] x_latch,y_latch,cnt;
+reg [7:0] /*x_latch,*/y_latch,cnt;
 reg [8:0] clk_div;
 reg [9:0] dout_reg;
 reg [32:0] shift_reg;
-reg       leflatch,riglatch,midlatch;
+//reg       leflatch,riglatch,midlatch;
 reg       ps2_clk_in,ps2_clk_syn1,ps2_dat_in,ps2_dat_syn1;
 wire      clk,ps2_dat_syn0,ps2_clk_syn0,ps2_dat_out,ps2_clk_out,flag;
 
@@ -90,9 +90,9 @@ assign ps2_dat_out = dout_reg[0];
 assign ps2_clk_syn0 = ce?1'b1:PS2_CLK;
 assign ps2_dat_syn0 = de?1'b1:PS2_DAT;
 //
-assign oLEFBUT = leflatch;
-assign oRIGBUT = riglatch;
-assign oMIDBUT = midlatch;
+//assign oLEFBUT = leflatch;
+//assign oRIGBUT = riglatch;
+//assign oMIDBUT = midlatch;
 //multi-clock region simple synchronization
 always@(posedge clk)
 	begin
@@ -163,18 +163,18 @@ always@(posedge clk,negedge iRST_n)
 begin
    if (!iRST_n) 
    begin
-      leflatch <= 1'b0;
-      riglatch <= 1'b0;
-      midlatch <= 1'b0;
-      x_latch  <= 8'd0;
+      //leflatch <= 1'b0;
+      //riglatch <= 1'b0;
+      //midlatch <= 1'b0;
+      //x_latch  <= 8'd0;
       y_latch  <= 8'd0;
    end
    else if (cnt == 8'b00011110 && (ct[5] == 1'b1 || ct[4] == 1'b1))
    begin
-      leflatch <= shift_reg[1];
-      riglatch <= shift_reg[2];
-      midlatch <= shift_reg[3];
-      x_latch  <= x_latch + shift_reg[19 : 12];
+      //leflatch <= shift_reg[1];
+      //riglatch <= shift_reg[2];
+      //midlatch <= shift_reg[3];
+      //x_latch  <= x_latch + shift_reg[19 : 12];
       y_latch  <= y_latch + shift_reg[30 : 23];
    end
 end

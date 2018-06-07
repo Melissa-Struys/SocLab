@@ -258,7 +258,7 @@ module DE1_SOC_golden_top(
  assign GPIO_0[15] = 0;
  assign GPIO_0[12] = clk_out; 
  
- wire [3:0] y_latch;
+ wire [7:0] y_latch;
  wire [2:0] rgb1;
  
  assign GPIO_0[1] = rgb1[2];
@@ -300,11 +300,11 @@ ps2 muis(
            .iCLK_50(CLOCK_50),  //clock source;
            .PS2_CLK(PS2_CLK),  //ps2_clock signal inout;
            .PS2_DAT(PS2_DAT),  //ps2_data  signal inout;
-           .oLEFBUT(LEDR[0]),  //left button press display;
-           .oRIGBUT(LEDR[1]),  //right button press display;
-           .oMIDBUT(LEDR[2]),  //middle button press display;
-           .oX_MOV1(HEX0),  //lower SEG of mouse displacement display for X axis.
-           .oX_MOV2(HEX1),  //higher SEG of mouse displacement display for X axis.
+           //.oLEFBUT(LEDR[0]),  //left button press display;
+           //.oRIGBUT(LEDR[1]),  //right button press display;
+           //.oMIDBUT(LEDR[2]),  //middle button press display;
+           //.oX_MOV1(HEX0),  //lower SEG of mouse displacement display for X axis.
+           //.oX_MOV2(HEX1),  //higher SEG of mouse displacement display for X axis.
            .oY_MOV1(HEX2),  //lower SEG of mouse displacement display for Y axis.
            .oY_MOV2(HEX3),   //higher SEG of mouse displacement display for Y axis.
 			  .y_latch_out(y_latch)
