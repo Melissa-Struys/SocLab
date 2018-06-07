@@ -20,11 +20,12 @@ module ledctrl(clk_in, rst, clk_out, rgb1, rgb2, led_addr, lat, oe, addr, data, 
  
  wire clk;
  
- reg [7:0] s_muis;
- wire [7:0] next_muis;
- reg [7:0] s_muisvorige, next_muisvorige, s_muisverschil, next_muisverschil;
-	assign next_muis = y_latch;
- reg verschoven, volgendefoto, stilstaan;
+ reg [3:0] s_muis;
+ wire [3:0] next_muis;
+ reg [3:0] s_muisvorige, next_muisvorige, s_muisverschil, next_muisverschil;
+	assign next_muis = y_latch[3:0];
+ reg verschoven, volgendefoto;
+ reg [2:0] stilstaan;
  reg [2:0] s_frame, next_frame;
  reg [3:0] s_foto, next_foto;
  
@@ -130,7 +131,7 @@ module ledctrl(clk_in, rst, clk_out, rgb1, rgb2, led_addr, lat, oe, addr, data, 
 							next_muisverschil = s_muis - s_muisvorige;
 							next_muisvorige = s_muis;
 							if(s_muisverschil != 0) begin
-								next_ram_addr[5:0] = s_ram_addr[5:0] + s_muisverschil[7:5];	
+								next_ram_addr[5:0] = s_ram_addr[5:0] + s_muisverschil[3:0];	
 								stilstaan = 0;
 							end else begin
 								stilstaan = 1;
